@@ -104,12 +104,22 @@ class SitemapSettingsUI
                     <th scope="row">Add sitemap URL to the robots.txt file</th>
                     <td><input name="sitemap_add_to_robotstxt" type="checkbox" {$addToRobotsTxt} value="1"></td>
                 </tr>
+            </tbody>
+        </table>
+    </div> 
+</div>
+
+<div class="postbox">
+    <div class="postbox-header"><h2 class="hndle ui-sortable-handle">Exclude pages from sitemap</h2></div>
+    <div class="inside">
+        <table class="form-table">
+            <tbody>
                 <tr>
-                    <th scope="row"><label for="default_role">Exclude categories(comma separated)</label></th>
+                    <th scope="row"><label for="default_role">Excluded categories</label></th>
                     <td>{$cat_options}</td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="default_role">Exclude posts(comma separated)</label></th>
+                    <th scope="row"><label for="default_role">Excluded posts</label></th>
                     <td>{$post_options}</td>
                 </tr>
             </tbody>

@@ -25,8 +25,8 @@ class SitemapBuilder
         $this->categories = get_option('sitemap_disp_categories') ? array(0 => 0) : false;
         $this->tags = get_option('sitemap_disp_tags') ? array(0 => 0) : false;
         $this->authors = get_option('sitemap_disp_authors') ? array(0 => 0) : false;
-        $this->excludedCategories = explode(',', get_option('sitemap_excluded_categories'));
-        $this->excludedPosts = explode(',', get_option('sitemap_excluded_posts'));
+        $this->excludedCategories = get_option('sitemap_excluded_categories');
+        $this->excludedPosts = get_option('sitemap_excluded_posts');
     }
 
     // Generates the sitemaps and returns the content
@@ -87,7 +87,9 @@ class SitemapBuilder
 
         global $post;
         $localPost = $post;
-
+        if(empty($this->excludedPosts)){
+            $this->excludedPosts = array(0 => 0);
+        }
         if ($q->have_posts()) {
             while ($q->have_posts()) {
                 $q->the_post();
@@ -115,7 +117,9 @@ class SitemapBuilder
     // Gets a posts categories, tags and author, and compares for last modified date
     private function getCategoriesTagsAndAuthor ($date) {
         if ($this->categories && ($postCats = get_the_category())) {
-
+            if(empty($this->excludedCategories)){
+                $this->excludedCategories = array(0 => 0);
+            }
             foreach ($postCats as $category) {
                 $id = $category->term_id;
                 if ((!isset($this->categories[$id]) || $this->categories[$id] < $date) && !in_array($category->name,$this->excludedCategories)) {
